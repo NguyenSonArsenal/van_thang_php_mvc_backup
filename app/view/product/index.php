@@ -77,9 +77,9 @@
                                     <table class="table table-striped table-bordered dataTable" role="grid">
                                         <thead>
                                             <tr>
-                                                <th scope="col">STT</th>
-                                                <th scope="col">ID</th>
-                                                <th scope="col">Tên</th>
+                                                <th scope="col" width="50px">STT</th>
+                                                <th scope="col" width="50px">ID</th>
+                                                <th scope="col" width="300px">Tên</th>
                                                 <th scope="col">Danh mục</th>
                                                 <th scope="col">Ảnh đại diện</th>
                                                 <th scope="col">Giá (VNĐ)</th>
@@ -96,7 +96,7 @@
                                                 <td><?php echo arrayGet($item, 'c_name'); ?></td>
                                                 <td>
                                                     <?php if(arrayGet($item, 'avatar')): ?>
-                                                        <?= arrayGet($item, 'avatar') ?>
+                                                        <img src="<?= WEB_ROOT . arrayGet($item, 'avatar') ?>" alt="" width="50" height="50">
                                                     <?php else: ?>
                                                         <img src="<?= WEB_ROOT . 'public/image/no-image.jpg' ?>" alt="" width="50" height="50">
                                                     <?php endif; ?>
@@ -104,7 +104,7 @@
                                                 <td>
                                                     <div>Giá gốc: <?= formatPriceCurrency(arrayGet($item, 'price_origin')); ?></div>
                                                     <div>Sale: <?= arrayGet($item, 'sale'); ?>%</div>
-                                                    <div>Giá bán:: <?= formatPriceCurrency(arrayGet($item, 'price_sell')); ?></div>
+                                                    <div>Giá bán: <?= formatPriceCurrency(arrayGet($item, 'price_sell')); ?></div>
                                                 </td>
                                                 <td><?= arrayGet($item, 'hot') == PRODUCT_HOT ? "Có" : "Không" ?></td>
                                                 <td>

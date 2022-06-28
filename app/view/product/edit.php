@@ -27,7 +27,7 @@
 
                                 <div id="zero_config_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                     <div class="card">
-                                        <form class="form-horizontal store-update-entity" action="<?= WEB_ROOT . 'category/update?id=' . arrayGet($data, 'id') ?>" method="post"
+                                        <form class="form-horizontal store-update-entity" action="<?= WEB_ROOT . 'product/update?id=' . arrayGet($data, 'id') ?>" method="post"
                                               enctype="multipart/form-data" autocomplete="off">
 
                                             <?php if (arrayGet($_SESSION, 'message')) { ?>
@@ -51,20 +51,82 @@
                                             <b>Thông tin cơ bản</b>
                                             <div class="card-body">
                                                 <div class="row">
-                                                    <div class="col-md-4">
+                                                    <div class="col-sm-6">
                                                         <div class="form-group row">
-                                                            <label class="col-md-4 text-right control-label col-form-label">Username
-                                                                <span class="text-danger">*</span>
-                                                            </label>
-                                                            <div class="col-md-8">
+                                                            <label for="fname" class="col-sm-3 text-right control-label col-form-label">Tên *</label>
+                                                            <div class="col-sm-8">
                                                                 <input type="text" class="form-control" name="name"
-                                                                       required
-                                                                       value="<?= !empty($_SESSION['data']) ? arrayGet($_SESSION['data'], 'name') : arrayGet($data, 'name') ?>"
-                                                                       placeholder="Nhập tên danh mục"
-                                                                       autocomplete="off">
+                                                                       required value="<?= arrayGet($data, 'name') ?>" placeholder="Nhập tên">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group row">
+                                                            <label for="fname" class="col-sm-3 text-right control-label col-form-label">Giá gốc (VNĐ)</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="number" class="form-control" name="price_origin"
+                                                                       value="<?= arrayGet($data, 'price_origin') ?>">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group row">
+                                                            <label for="fname" class="col-sm-3 text-right control-label col-form-label">Khuyến mại (%)</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="number" class="form-control" name="sale" max="99"
+                                                                       value="<?= arrayGet($data, 'sale') ?>">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group row">
+                                                            <label for="fname" class="col-sm-3 text-right control-label col-form-label">Mô tả ngắn</label>
+                                                            <div class="col-sm-8">
+                                                        <textarea  type="text" class="form-control" maxlength="255" rows="5"
+                                                                   name="sort_describe" placeholder="Nhập mô tả ngắn"><?= arrayGet($data, 'sort_describe') ?></textarea>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group row">
+                                                            <label for="fname" class="col-sm-3 text-right control-label col-form-label">Ảnh đại diện</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="hidden" class="form-control" name="file_name" value="<?= arrayGet($data, 'avatar')?>">
+                                                                <input type="file" class="form-control" name="avatar" value="">
+                                                                <?php if (arrayGet($data, 'avatar')): ?>
+                                                                    <img src="<?= WEB_ROOT . arrayGet($data, 'avatar') ?>" alt="" width="150px">
+                                                                <?php endif;?>
                                                             </div>
                                                         </div>
                                                     </div>
+
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group row">
+                                                            <label class="col-md-3 text-right control-label col-form-label">Danh mục *</label>
+                                                            <div class="col-md-8">
+                                                                <div class="my-select2">
+                                                                    <select class="my-select2__select2 select2-wrapper" name="category_id">
+                                                                        <option selected readonly value="">--- Vui lòng chọn ---</option>
+                                                                        <?php foreach($dataCategory as $item): ?>
+                                                                        <option value="<?= arrayGet($item, 'id') ?>" <?= arrayGet($item, 'id') == arrayGet($data, 'category_id') ? "selected" : '' ?>>
+                                                                            <?= arrayGet($item, 'name') ?>
+                                                                        </option>
+                                                                        <?php endforeach; ?>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group row">
+                                                            <label class="col-md-3 text-right control-label col-form-label">Nổi bật</label>
+                                                            <div class="col-md-8">
+                                                                <div class="my-select2">
+                                                                    <select class="my-select2__select2 select2-wrapper" name="hot">
+                                                                        <option selected readonly value="">--- Vui lòng chọn ---</option>
+                                                                        <option value="<?= PRODUCT_HOT ?>" <?= arrayGet($data, 'hot') == PRODUCT_HOT ? "selected" : '' ?>>Có</option>
+                                                                        <option value="<?= PRODUCT_NO_HOT ?>" <?= arrayGet($data, 'hot') == PRODUCT_NO_HOT ? "selected" : '' ?>>Không</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
                                             </div>
 
