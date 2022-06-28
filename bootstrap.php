@@ -13,6 +13,9 @@ if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] 
 $webRoot = $protocol . $_SERVER['SERVER_NAME'];
 define('WEB_ROOT', $webRoot . '/van_thang_php_mvc_backup/');
 
+define('PRODUCT_HOT', 1);
+define('PRODUCT_NO_HOT', 2);
+
 require_once 'function.php';
 require_once 'config/system.php';
 require_once 'config/route.php';

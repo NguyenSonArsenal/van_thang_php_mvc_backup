@@ -12,31 +12,56 @@ class ProductController extends Controller{
 
         $id = arrayGet($_GET, 'id');
         $username = arrayGet($_GET, 'username');
+        $categoryId = arrayGet($_GET, 'category_id');
+        $hot = arrayGet($_GET, 'hot', '');
 
-        $query = "SELECT * FROM user";
-        if ($id && $username) {
-            $query .= " where id = '$id' and username like '%$username%'";
-        } else if ($id) {
-            $query .= " where id = '$id'";
-        } else if ($username) {
-            $query .= " where username like '%$username%'";
+        $query = "SELECT product.*, category.name as c_name FROM `product`
+              left join category on product.category_id = category.id";
+
+        $hasSearch = false;
+        if ($id) {
+            $query .= $hasSearch ? " and " : "" . " where product.id = '$id'";
+            $hasSearch = true;
         }
-        $query .= " ORDER BY id DESC";
+        if ($username) {
+            $and = $hasSearch ? " and " : " where ";
+            $query .= "$and product.name like '%$username%'";
+            $hasSearch = true;
+        }
+        if ($categoryId) {
+            $and = $hasSearch ? " and " : " where ";
+            $query .= "$and product.category_id = '$categoryId'";
+            $hasSearch = true;
+        }
+        if ($hot) {
+            $and = $hasSearch ? " and " : " where ";
+            $query .= "$and product.hot = '$hot'";
+        }
+
+        $query .= " ORDER BY product.id DESC";
+
+//        echo $query;die;
 
         $query = $db->prepare($query);
         $query->execute();
-        $dataList = $query->fetchAll(); // foreach
+        $dataList = $query->fetchAll();
+
+        // get list category
+        $query2 = $db->prepare("select * from `category`");
+        $query2->execute();
+        $dataCategory = $query2->fetchAll();
 
         $viewData = [
-            'dataList' => $dataList
+            'dataList' => $dataList,
+            'dataCategory' => $dataCategory,
         ];
 
-        return $this->render('user/index', $viewData);
+        return $this->render('product/index', $viewData);
     }
 
     public function create()
     {
-        return $this->render('user/create');
+        return $this->render('product/create');
     }
 
     public function store()
@@ -91,7 +116,7 @@ class ProductController extends Controller{
                 'data' => $data
             ];
 
-            return $this->render('user/edit', $viewData);
+            return $this->render('product/edit', $viewData);
         } catch (\Exception $e) {
             return loadError();
         }
@@ -141,7 +166,7 @@ class ProductController extends Controller{
         global $db;
         $id = arrayGet($_GET, 'id');
 
-        $sql = "DELETE FROM `user` WHERE id=$id";
+        $sql = "DELETE FROM `product` WHERE id=$id";
         $db->exec($sql);
         $_SESSION['message'] = 'Xóa thành công';
 

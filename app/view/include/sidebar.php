@@ -14,6 +14,12 @@
                         <span class="hide-menu">Danh mục sản phẩm</span>
                     </a>
                 </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark" href="<?= WEB_ROOT . 'product' ?>">
+                        <i class="mdi mdi-view-dashboard"></i>
+                        <span class="hide-menu">Sản phẩm</span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>
