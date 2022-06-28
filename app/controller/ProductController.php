@@ -31,11 +31,14 @@ class ProductController extends Controller{
         if ($categoryId) {
             $and = $hasSearch ? " and " : " where ";
             $query .= "$and product.category_id = '$categoryId'";
+            $hasSearch = true;
+        }
+        if ($hot) {
+            $and = $hasSearch ? " and " : " where ";
+            $query .= "$and product.hot = '$hot'";
         }
 
         $query .= " ORDER BY product.id DESC";
-
-//        echo $query;die;
 
         $query = $db->prepare($query);
         $query->execute();
